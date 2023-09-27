@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Photos of Album:- {{ ablumNumber }}</h1>
+<div mat-dialog-content class="imageList">
+  <mat-card style="width: 150px" *ngFor="let item of albumsPhotos">
+    <mat-card-content>
+      <img
+        mat-card-image
+        style="width: 100%"
+        [src]="item.url"
+        [alt]="item.title"
+      />
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions class="buttonClose">
+  <button mat-flat-button color="accent" (click)="onNoClick()">Close</button>
+</div>

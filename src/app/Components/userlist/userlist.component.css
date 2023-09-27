@@ -1,0 +1,21 @@
+.tableWrapper {
+  min-width: calc(100vw - 200px);
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.tableWrapper .table {
+  width: 1200px !important;
+  min-width: 0%;
+}
+
+.tableWrapper .clickName {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tableWrapper .clickName:hover {
+  color: rgb(61, 61, 228);
+  text-decoration: underline;
+}

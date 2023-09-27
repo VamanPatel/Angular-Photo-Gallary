@@ -1,0 +1,43 @@
+.albumsWrapper .header {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.tableWrapper {
+  min-width: calc(100vw - 200px);
+  display: flex;
+  justify-content: center;
+}
+
+.tableWrapper .table {
+  width: 500px !important;
+  min-width: 0%;
+}
+
+.tableWrapper .selectCell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.albumsWrapper .buttonWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+/* .tableWrapper .selectCell:hover {
+  text-decoration: none;
+  color: rgb(77, 77, 198);
+}
+
+.tableWrapper .selectCellBackGround {
+  background: #90d2ff;
+} */
