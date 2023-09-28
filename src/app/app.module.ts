@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserlistComponent } from './Components/userlist/userlist.component';
 import { AlbumsComponent } from './Components/albums/albums.component';
 import { MatCardModule } from '@angular/material/card';
@@ -32,6 +33,7 @@ import { PhotoDialogComponent } from './Components/dialogs/photo-dialog/photo-di
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
+    MatSnackBarModule,
     HttpClientModule,
     FormsModule,
     MatInputModule,

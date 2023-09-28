@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
 import { ApiService } from 'src/app/Services/api.service';
 import { Albums } from 'src/app/modals/albums.modal';
 import { PhotoDialogComponent } from '../dialogs/photo-dialog/photo-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-albums',
@@ -22,7 +22,8 @@ export class AlbumsComponent implements OnInit {
   constructor(
     private api: ApiService,
     private route: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snak: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -33,16 +34,22 @@ export class AlbumsComponent implements OnInit {
   }
 
   getUserAlbums() {
-    this.api.getUserAlbums().subscribe((res) => {
-      res.forEach((q) => {
-        q.isSelected = false;
-        q.isClick = false;
-      });
+    this.api.getUserAlbums().subscribe(
+      (res) => {
+        res.forEach((q) => {
+          q.isSelected = false;
+          q.isClick = false;
+        });
 
-      this.userAblums = res.filter((f) => {
-        return f.userId == this.userID;
-      });
-    });
+        this.userAblums = res.filter((f) => {
+          return f.userId == this.userID;
+        });
+      },
+      (error) => {
+        console.log(error);
+        this.snak.open('Something Went Wrong', 'Ok', { duration: 2000 });
+      }
+    );
   }
 
   selectAlbum(id: number) {

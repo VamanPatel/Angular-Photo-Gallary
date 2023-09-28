@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from 'src/app/Services/api.service';
 import { Photos } from 'src/app/modals/photos.modal';
 
@@ -19,7 +20,8 @@ export class PhotoDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<PhotoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private api: ApiService
+    private api: ApiService,
+    private snak: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -31,42 +33,48 @@ export class PhotoDialogComponent implements OnInit {
   }
 
   getPhotosOfAlbums() {
-    this.api.getUserPhotos().subscribe((res) => {
-      console.log(this.data.albumIDs);
+    this.api.getUserPhotos().subscribe(
+      (res) => {
+        console.log(this.data.albumIDs);
 
-      if (this.data.albumIDs.length == 1) {
-        this.albumsPhotos = res.filter((obj) => {
-          this.ablumNumber = this.data.albumIDs[0];
-          return obj.albumId == this.data.albumIDs[0];
-        });
+        if (this.data.albumIDs.length == 1) {
+          this.albumsPhotos = res.filter((obj) => {
+            this.ablumNumber = this.data.albumIDs[0];
+            return obj.albumId == this.data.albumIDs[0];
+          });
 
-        console.log(this.albumsPhotos, '42 line');
-      } else {
-        let counter = 0;
+          console.log(this.albumsPhotos, '42 line');
+        } else {
+          let counter = 0;
 
-        this.albumsPhotos = res.filter((obj) => {
-          this.ablumNumber = this.data.albumIDs[counter];
-          return obj.albumId == this.data.albumIDs[counter];
-        });
-        counter += 1;
-
-        let interval = setInterval(() => {
           this.albumsPhotos = res.filter((obj) => {
             this.ablumNumber = this.data.albumIDs[counter];
             return obj.albumId == this.data.albumIDs[counter];
           });
-
           counter += 1;
 
-          if (counter == this.data.albumIDs.length) counter = 0;
+          let interval = setInterval(() => {
+            this.albumsPhotos = res.filter((obj) => {
+              this.ablumNumber = this.data.albumIDs[counter];
+              return obj.albumId == this.data.albumIDs[counter];
+            });
 
-          this.dialogRef.afterClosed().subscribe((result) => {
-            clearInterval(interval);
-          });
+            counter += 1;
 
-          console.log(this.albumsPhotos, 'line 59');
-        }, 20000);
+            if (counter == this.data.albumIDs.length) counter = 0;
+
+            this.dialogRef.afterClosed().subscribe((result) => {
+              clearInterval(interval);
+            });
+
+            console.log(this.albumsPhotos, 'line 59');
+          }, 20000);
+        }
+      },
+      (error) => {
+        console.log(error);
+        this.snak.open('Something Went Wrong', 'Ok', { duration: 2000 });
       }
-    });
+    );
   }
 }
