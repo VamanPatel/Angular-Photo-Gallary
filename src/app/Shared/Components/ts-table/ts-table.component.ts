@@ -21,6 +21,7 @@ export class TsTableComponent implements OnInit, AfterViewInit {
   @Input() tableData: Array<any> = [];
   @Input() isPaginator: boolean = false;
   @Input() isSelectable: boolean = false;
+  @Input() enabledFilterColumnNames: string[] = [];
 
   public columnNames: any[] = [];
 
@@ -52,17 +53,13 @@ export class TsTableComponent implements OnInit, AfterViewInit {
 
   applyFilter(e: any) {
     const filterValue = (e.target as HTMLInputElement).value;
+    console.log(this.enabledFilterColumnNames);
 
-    const filterData = this.tableData.slice().filter((i, index) => {
-      return (
-        i.name.toLowerCase().includes(filterValue.toLowerCase()) ||
-        i.email.toLocaleLowerCase().includes(filterValue.toLowerCase())
-      );
-    });
-
-    console.log(filterData);
-
-    this.dataSource = new MatTableDataSource(filterData);
+    if (filterValue == '') {
+      this.dataSource = new MatTableDataSource(this.tableData);
+    } else {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
