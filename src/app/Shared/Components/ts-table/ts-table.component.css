@@ -1,0 +1,37 @@
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+::ng-deep .mat-mdc-form-field.subscript-wrapper {
+  display: none;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  height: 50px !important;
+}
+
+#formField {
+  width: 100% !important;
+  margin: 10px 0;
+}
+
+.filterData {
+  width: calc(100vw - 60px);
+  margin: 0 auto;
+}
+
+.buttonWrapper {
+  width: calc(100vw - 60px);
+  margin: 0 auto;
+}
+
+.buttonWrapper .addRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.tableWrapper {
+  width: calc(100vw - 60px);
+  margin: 10px auto;
+}

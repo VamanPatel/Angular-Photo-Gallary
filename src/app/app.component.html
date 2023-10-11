@@ -3,5 +3,14 @@
 </mat-toolbar>
 
 <div class="mainWrapper">
-  <router-outlet></router-outlet>
+  <ts-table
+    [tableData]="userData"
+    [tableColumns]="tableColumnData"
+    [isSelectable]="showRowSelect"
+    [isPaginator]="showPaginator"
+  ></ts-table>
 </div>
+
+<!-- <div class="mainWrapper">
+  <router-outlet></router-outlet>
+</div> -->

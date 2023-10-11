@@ -1,0 +1,114 @@
+<div class="filterData">
+  <mat-form-field id="formField">
+    <mat-label>Filter Data</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Ex. Vaman"
+      #input
+    />
+  </mat-form-field>
+</div>
+
+<div class="buttonWrapper">
+  <div class="addRow">
+    <button mat-raised-button color="primary" (click)="saveData()">Save</button>
+    <button mat-raised-button color="accent" (click)="addData()">
+      Add Data
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="deleteData()"
+      *ngIf="!(selectedRow.length == 0)"
+    >
+      Delete Row
+    </button>
+  </div>
+</div>
+
+<div class="mat-elevation-z8 tableWrapper">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- checkbox column -->
+    <ng-container matColumnDef="Select">
+      <th mat-header-cell *matHeaderCellDef [hidden]="isSelectable">
+        <mat-checkbox></mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row" [hidden]="isSelectable">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          [(ngModel)]="row.isSelected"
+          (change)="rowSelect($event, row)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container
+      *ngFor="let disCol of displayedColumns; let colIndex = index"
+      matColumnDef="{{ disCol.headerData }}"
+    >
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        [disabled]="!disCol.isSort"
+      >
+        {{ disCol.headerData }}
+      </th>
+
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="disCol.isText">{{ element[disCol.keyName] }}</span>
+        <img [src]="element[disCol.keyName]" alt="" *ngIf="disCol.isImage" />
+        <button
+          mat-raised-button
+          color="accent"
+          *ngIf="disCol.isButton"
+          (click)="$event.stopPropagation(); buttonClick($event)"
+        >
+          {{ disCol.buttonName }}
+        </button>
+
+        <div style="margin: 5px 0">
+          <mat-form-field
+            *ngIf="disCol.isDropdown"
+            appearance="outline"
+            (click)="$event.stopPropagation()"
+          >
+            <mat-label>Select {{ disCol.headerData }}</mat-label>
+            <mat-select required style="font-size: 12px">
+              <mat-option
+                style="font-size: 12px"
+                *ngFor="let data of element[disCol.keyName]"
+                [value]="
+                  data[
+                    disCol.dropdownSelectValue ? disCol.dropdownSelectValue : ''
+                  ]
+                "
+                >{{
+                  data[
+                    disCol.dropdownSelectValue ? disCol.dropdownSelectValue : ""
+                  ]
+                }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnNames"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: columnNames"
+      (click)="rowAlert(row)"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    *ngIf="isPaginator"
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+</div>

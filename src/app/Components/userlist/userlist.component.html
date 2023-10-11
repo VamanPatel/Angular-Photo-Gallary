@@ -1,8 +1,18 @@
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" #input />
+</mat-form-field>
+
 <div class="tableWrapper">
-  <table mat-table [dataSource]="userData" class="mat-elevation-z8 table">
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8 table"
+    matSort
+  >
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
       <td mat-cell *matCellDef="let element">
         <a class="clickName" (click)="openAlbums(element.id)">{{
           element.name
@@ -12,13 +22,13 @@
 
     <!-- Email ID Column -->
     <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
       <td mat-cell *matCellDef="let element">{{ element.email }}</td>
     </ng-container>
 
     <!-- Address Column -->
     <ng-container matColumnDef="Address">
-      <th mat-header-cell *matHeaderCellDef>Address</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
       <td mat-cell *matCellDef="let element">
         {{ element.address.suite }} {{ element.address.street }}
         {{ element.address.city }}:- {{ element.address.zipcode }}
